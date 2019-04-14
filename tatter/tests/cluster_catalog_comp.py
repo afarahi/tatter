@@ -2,8 +2,12 @@
 def if_RM_clusters_exists():
 
     from pathlib import Path
+    import os
 
     data_path = "./tatter/tests/data/"
+
+    if not os.path.exists(data_path):
+        os.makedirs(data_path)
 
     # if cluster catalogs does noe exists download them
     for fname in ["redmapper_sva1_public_v6.3_catalog.fits", "redmapper_dr8_public_v6.3_catalog.fits"]:
@@ -11,7 +15,7 @@ def if_RM_clusters_exists():
         fname_file = Path(data_path + fname)
 
         if not fname_file.is_file():
-            import wget, gzip, shutil, os
+            import wget, gzip, shutil
             url = 'http://risa.stanford.edu/redmapper/v6.3/%s.gz' % fname
             _ = wget.download(url, out=data_path[2:])
             with gzip.open(data_path + fname + '.gz', 'rb') as f_in:
@@ -27,8 +31,12 @@ def RM_clusters_witness_function():
     import matplotlib.pyplot as plt
     from sklearn.metrics import pairwise_distances
     from tatter import two_sample_test, test_statistics, witness_function
+    import os
 
     data_path = "./tatter/tests/data/"
+    plot_path = './tatter/tests/plots/'
+    if not os.path.exists(plot_path):
+        os.makedirs(plot_path)
 
     # if cluster catalogs does noe exists download them
     if_RM_clusters_exists()
@@ -77,7 +85,7 @@ def RM_clusters_witness_function():
         if i%2 == 0: ax.set_ylabel('witness function', size=22)
         if i > 1: ax.set_xlabel(r'$\lambda_{\rm RM}$', size=22)
 
-    plt.savefig('./tatter/tests/plots/SDSS-vs-SV-witness-function.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'SDSS-vs-SV-witness-function.pdf', bbox_inches='tight')
 
 
 def RM_clusters_consistency_check():
@@ -87,10 +95,14 @@ def RM_clusters_consistency_check():
     from tatter import two_sample_test
     import matplotlib.pyplot as plt
     from sklearn.metrics import pairwise_distances
+    import os
 
     plt.figure(figsize=(12, 12))
 
     data_path = "./tatter/tests/data/"
+    plot_path = './tatter/tests/plots/'
+    if not os.path.exists(plot_path):
+        os.makedirs(plot_path)
 
     # if cluster catalogs does noe exists download them
     if_RM_clusters_exists()
@@ -153,5 +165,5 @@ def RM_clusters_consistency_check():
         if i > 1: ax.set_xlabel('$MMD^2_u$', size=22)
         plt.legend(numpoints=1, prop={'size':14})
 
-    plt.savefig('./tatter/tests/plots/SDSS-vs-SV.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'SDSS-vs-SV.pdf', bbox_inches='tight')
 

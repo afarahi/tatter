@@ -6,6 +6,11 @@ def mnist_digits_distance():
     import matplotlib.pyplot as plt
     from tatter import two_sample_test
     from sklearn.metrics import pairwise_distances
+    import os
+
+    plot_path = './tatter/tests/plots/'
+    if not os.path.exists(plot_path):
+        os.makedirs(plot_path)
 
     digits = datasets.load_digits()
     data = digits.data
@@ -43,7 +48,7 @@ def mnist_digits_distance():
                 ax.set_xlabel('$MMD^2_u$ estimate', size=25)
             # plt.legend(loc=1, numpoints=1, prop={'size':15})
 
-    plt.savefig('./tatter/tests/plots/MNIST-test.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'MNIST-test.pdf', bbox_inches='tight')
 
 
     plt.figure(figsize=(24, 2))
@@ -72,4 +77,4 @@ def mnist_digits_distance():
         ax.set_xticks([-0.005, 0, 0.005, 0.01 ])
         ax.set_xticklabels([-0.005, '0', 0.005, ' ' ], size=14)
 
-    plt.savefig('./tatter/tests/plots/MNIST-test-1.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'MNIST-test-2.pdf', bbox_inches='tight')

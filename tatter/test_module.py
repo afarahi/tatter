@@ -20,8 +20,8 @@ def main():
 
     # test_gaussian_vs_lognormal() ## [passed]
     # RM_clusters_consistency_check() ## [passed]
-    RM_clusters_witness_function() ## [passed]
-    # mnist_digits_distance() ## [passed]
+    # RM_clusters_witness_function() ## [passed]
+    mnist_digits_distance() ## [passed]
 
     end = time.time()
     print("The execution time is %0.2f (s)" % (end - start))

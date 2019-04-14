@@ -4,6 +4,11 @@ def test_gaussian_vs_lognormal():
     import numpy as np
     import matplotlib.pyplot as plt
     from sklearn.metrics import pairwise_distances
+    import os
+
+    plot_path = './tatter/tests/plots/'
+    if not os.path.exists(plot_path):
+        os.makedirs(plot_path)
 
     np.random.seed(100)
 
@@ -51,7 +56,7 @@ def test_gaussian_vs_lognormal():
     plt.ylabel('PDF', size=20)
     plt.legend(loc=1, numpoints=1, prop={'size':15})
 
-    plt.savefig('./tatter/tests/plots/log-normal-vs-normal-p-val.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'log-normal-vs-normal-p-val.pdf', bbox_inches='tight')
     # plt.show()
 
     plt.figure(figsize=(6, 5))
@@ -64,5 +69,5 @@ def test_gaussian_vs_lognormal():
     plt.xlabel(r'$x \in \mathcal{X}$', size=18)
     plt.ylabel('PDF', size=18)
 
-    plt.savefig('./tatter/tests/plots/log-normal-vs-normal-dist.pdf', bbox_inches='tight')
+    plt.savefig(plot_path + 'log-normal-vs-normal-dist.pdf', bbox_inches='tight')
     # plt.show()

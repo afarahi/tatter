@@ -23,7 +23,7 @@ TATTER (Two-sAmple TesT EstimatoR) is a tool to perform two-sample hypothesis te
 
 - The provided tests reproduce Figures 3, 4, and 5 in the paper. Running
 all of these tests takes ~30 minutes. If your are impatient to reproduce
-one of the figures try `MNIST_test.py` first.
+one of the figures try `mnist_digits_distance.py` first.
 
 ## References
 
