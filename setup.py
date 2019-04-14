@@ -30,11 +30,11 @@ with open(os.path.join(dir_path, 'readme.md')) as f:
     long_description = f.read()
 
 kwargs = {
-    'name': 'fastdtw',
+    'name': 'tatter',
     'version': '0.9.0',
     'author': 'Arya Farahi',
     'author_email': 'afarahi@andrew.cmu.edu',
-    'url': 'https://github.com/afarahi/XXXX',
+    'url': 'https://github.com/afarahi/tatter',
     'description': 'Two-Sample Hypothesis Test.',
     'long_description': long_description,
     'long_description_content_type':'text/markdown',
