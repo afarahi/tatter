@@ -5,8 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.metrics import pairwise_distances
 
+# set the random seed
 np.random.seed(100)
 
+# set the number of observed data points
 n = 200
 
 # draw random points from a log-normal and a gaussian distributions
