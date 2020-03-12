@@ -24,13 +24,13 @@ TATTER (Two-sAmple TesT EstimatoR) is a tool to perform two-sample hypothesis te
  and generating a few thousands of bootstrap realizations when the
  sample size is large (n, m >1000) is not practical.
 
-- The provided tests reproduce Figures 3, 4, and 5 in the paper. Running
+- The provided tests reproduce Figures X, X, and X in the paper. Running
 all of these tests takes ~30 minutes. If your are impatient to reproduce
 one of the figures try `mnist_digits_distance.py` first.
 
 ## References
 
-[1]. A. Farahi, "[]()", arXiv preprint:
+[1]. A. Farahi, Y. Chen "[]()", arXiv preprint:
 
 [2]. A. Gretton, B. M. Karsten, R. J. Malte, B. Schölkopf, and A. Smola,
  "[A kernel two-sample test](http://www.jmlr.org/papers/v13/gretton12a.html)."
