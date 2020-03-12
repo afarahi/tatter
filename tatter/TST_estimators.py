@@ -55,7 +55,7 @@ The two-sample test estimator used in this implementation utilizes
 
 References:
 -----------
-[1]. A. Farahi,
+[1]. A. Farahi, Y. Chen,
      ".", arXiv preprint:
 
 [2]. A. Gretton, B. M. Karsten, R. J. Malte, B. Scholkopf, and A. Smola,
