@@ -3,7 +3,6 @@ from setuptools import setup, find_packages, Extension
 from setuptools.command.build_ext import build_ext as _build_ext
 import warnings
 
-
 # numpy path is needed
 try:
     import numpy
