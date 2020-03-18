@@ -15,6 +15,22 @@ and made it available locally. The original code is available at
 """
 
 def KL_divergence_estimator(X, Y, k=None):
+    """ Estimate symmetric version of KL divergence
+    Parameters
+    ----------
+        X, Y:
+            2-dimensional array where each row is a sample.
+        k:
+            k-NN to be used. None for adaptive choice.
+    """
+
+    kl1 =  KL_divergence_estimator_sub(X, Y, k=k)
+    kl2 =  KL_divergence_estimator_sub(Y, X, k=k)
+    
+    return (kl1 + kl2) / 2.0
+
+
+def KL_divergence_estimator_sub(X, Y, k=None):
     """ Estimate univesal k-NN divergence.
     Parameters
     ----------
