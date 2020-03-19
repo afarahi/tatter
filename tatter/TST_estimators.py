@@ -42,9 +42,9 @@ An example for using TATTER looks like this:
 
 Author:
 --------
-Arya Farahi
-The McWilliams Center for Cosmology
-Carnegie Mellon University
+Arya Farahi, aryaf@umich.edu
+Data Science Fellow
+University of Michigan -- Ann Arbor
 
 
 Libraries:
