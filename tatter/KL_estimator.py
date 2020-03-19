@@ -1,28 +1,25 @@
 from __future__ import absolute_import, division, print_function
-
-from functools import partial
 import numpy as np
-from scipy.spatial import KDTree
-from scipy.special import psi
 
-"""
-Disclaimer: 
-
-This is taken from universal-divergence which is available through pip.
-For compatibility with the rest of the library, I made minor changes to the code
-and made it available locally. The original code is available at
- https://github.com/slaypni/universal-divergence
-"""
-
-def KL_divergence_estimator(X, Y, k=None):
-    """ Estimate symmetric version of KL divergence
+def KL_divergence_estimator(X, Y, k=1):
+    """ Estimate symmetric version of KL divergence. 
+    The symmetric version is 0.5 * [ D(P|Q) + D(Q|P) ].
+     
     Parameters
     ----------
-        X, Y:
+        X, Y: numpy array
             2-dimensional array where each row is a sample.
-        k:
-            k-NN to be used. None for adaptive choice.
+        k: int optional
+            k-NN to be used. The default is k=1.
+    
+    return
+    ------
+    numpy array : estimated D(P|Q)
     """
+    if not (isinstance(k, int) or k is None):
+        raise ValueError('k has incorrect type.')
+    if k is not None and k <= 0:
+        raise ValueError('k cannot be <= 0')
 
     kl1 =  KL_divergence_estimator_sub(X, Y, k=k)
     kl2 =  KL_divergence_estimator_sub(Y, X, k=k)
@@ -30,78 +27,49 @@ def KL_divergence_estimator(X, Y, k=None):
     return (kl1 + kl2) / 2.0
 
 
-def KL_divergence_estimator_sub(X, Y, k=None):
-    """ Estimate univesal k-NN divergence.
+def KL_divergence_estimator_sub(X, Y, k=1):
+    """ KL-Divergence estimator universal k-NN estimator.
+    
     Parameters
     ----------
-        X, Y:
+        X, Y: numpy array
             2-dimensional array where each row is a sample.
-        k:
-            k-NN to be used. None for adaptive choice.
+        k: int, optional
+            k-NN to be used. The default is k=1.
+
+    return
+    ------
+    numpy array : estimated D(P|Q)
     """
+    n, m = len(X), len(Y)
+    D = np.log(m / (n - 1))
+    d = float(X.shape[1])
 
-    if not (isinstance(k, int) or k is None):
-        raise ValueError('k has incorrect type.')
-    if k is not None and k <= 0:
-        raise ValueError('k cannot be <= 0')
-    X = np.array(X)
-    Y = np.array(Y)
-    if len(X.shape) != 2 or len(Y.shape) != 2:
-        raise ValueError('X or Y has incorrect dimension.')
-    if X.shape[0] <= 1 or Y.shape[0] <= 1:
-        raise ValueError('number of samples is not sufficient.')
-    if X.shape[1] != Y.shape[1]:
-        raise ValueError('numbers of columns of X and Y are different.')
-    d = X.shape[1]
-    n = X.shape[0]
-    m = Y.shape[0]
+    for xi in X:
+        nu = knn_distance(xi, Y, k-1)
+        rho = knn_distance(xi, X, k)
+        D += (d/n)*np.log(nu/rho)
 
-    X_tree = KDTree(X)
-    Y_tree = KDTree(Y)
-
-    nhu_ro = [__calc_nu_rho(x, X_tree, Y_tree, k) for x in X]
-    r = (d / n) * sum(nhu_ro) + np.log(m / (n - 1))
-    if k is None:
-        l_k = [__calc_l_k(x, X_tree, Y_tree) for x in X]
-        r += (1 / n) * sum(l_k)
-    return r
+    return D
 
 
-def __get_epsilon(a, X_tree, Y_tree):
-    offset_X = len([None for x in X_tree.data if (x == np.array(a)).all()])
-    offset_Y = len([None for y in Y_tree.data if (y == np.array(a)).all()])
-    rho_d, _ = X_tree.query([a], offset_X+1)
-    nu_d, _ = Y_tree.query([a], offset_Y+1)
-    rho_d = rho_d[0] if offset_X == 0 else rho_d[0][-1]
-    nu_d = nu_d[0] if offset_Y == 0 else nu_d[0][-1]
-    return max(rho_d, nu_d) + 0.5 ** 40
+def knn_distance(point, sample, k):
+    """ Euclidean distance from `point` to it's `k`-Nearest
+    Neighbour in `sample`.
+    
+    Parameters
+    ----------
+        point: float
+            a data point from a sample.
+        sample: numpy array
+            2-dimensional array where each row is a sample.
+        k: int
+            k-NN to be used.
 
+    return
+    ------
+    numpy-array : `k`-Nearest Neighbour in `sample` 
+    """
+    norms = np.linalg.norm(sample-point, axis=1)
+    return np.sort(norms)[k]
 
-def __get_epsilon_sample_num(a, tree, X_tree, Y_tree, default_offset=0):
-    e = __get_epsilon(a, X_tree, Y_tree)
-    return len(tree.query_ball_point(a, e)) - default_offset
-
-
-def __get_distance(a, tree, X_tree, Y_tree, k, default_offset):
-    if k is None:
-        k_ = __get_epsilon_sample_num(a, tree, X_tree, Y_tree)
-    else:
-        k_ = k + default_offset
-    d, _ = tree.query([a], k_)
-    return d[0] if k_ == 1 else d[0][-1]
-
-
-def __calc_nu_rho(x, X_tree, Y_tree, k):
-    rho = partial(__get_distance, tree=X_tree, default_offset=1,
-                  X_tree=X_tree, Y_tree=Y_tree, k=k)
-    nu = partial(__get_distance, tree=Y_tree, default_offset=0,
-                 X_tree=X_tree, Y_tree=Y_tree, k=k)
-    return np.log(nu(x) / rho(x))
-
-
-def __calc_l_k(x, X_tree, Y_tree):
-    _l = partial(__get_epsilon_sample_num, tree=X_tree, default_offset=1,
-                 X_tree=X_tree, Y_tree=Y_tree)
-    _k = partial(__get_epsilon_sample_num, tree=Y_tree, default_offset=0,
-                 X_tree=X_tree, Y_tree=Y_tree)
-    return psi(_l(x)) - psi(_k(x))
