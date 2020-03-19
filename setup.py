@@ -32,7 +32,7 @@ kwargs = {
     'name': 'tatter',
     'version': '0.9.0',
     'author': 'Arya Farahi',
-    'author_email': 'afarahi@andrew.cmu.edu',
+    'author_email': 'aryaf@umich.edu',
     'url': 'https://github.com/afarahi/tatter',
     'description': 'Two-Sample Hypothesis Test.',
     'long_description': long_description,
