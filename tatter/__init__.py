@@ -1,2 +1,3 @@
 from .TST_estimators import two_sample_test, test_statistics, witness_function
 from .KL_estimator import KL_divergence_estimator
+from .posterior_predictive_check import posterior_predictive_check
