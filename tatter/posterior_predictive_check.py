@@ -32,7 +32,7 @@ function further below. An example of this function looks like this:
 
 Author:
 --------
-Arya Farahi
+Arya Farahi, aryaf@umich.edu
 Data Science Fellow
 University of Michigan -- Ann Arbor
 
