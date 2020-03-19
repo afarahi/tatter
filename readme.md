@@ -1,3 +1,7 @@
+![GitHub](https://img.shields.io/github/license/afarahi/tatter)
+![PyPI](https://img.shields.io/pypi/v/tatter)
+![PyPI - Python Version](https://img.shields.io/pypi/pyversions/tatter)
+
 <p align="center">
   <img src="logo.png" width="300" title="logo">
 </p>
