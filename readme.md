@@ -35,7 +35,7 @@ one of the figures try `mnist_digits_distance.py` first.
 
 ## References
 
-[1]. A. Farahi, Y. Chen "[]()", arXiv preprint:
+[1]. A. Farahi, Y. Chen "[TATTER: A hypothesis testing tool for multi-dimensional data](sciencedirect.com/science/article/abs/pii/S2213133720300998)." Astronomy and Computing, Volume 34, January (2021).
 
 [2]. A. Gretton, B. M. Karsten, R. J. Malte, B. Schölkopf, and A. Smola,
  "[A kernel two-sample test](http://www.jmlr.org/papers/v13/gretton12a.html)."
@@ -48,8 +48,6 @@ one of the figures try `mnist_digits_distance.py` first.
 [4]. W. H. Press, B. P. Flannery, S. A. Teukolsky, and W. T. Vetterling,
  "Numerical recipes." (1989).
 
-
-## Acknowledgment
 
 
 ## Quickstart
