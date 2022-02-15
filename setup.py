@@ -15,8 +15,11 @@ except ImportError:
     HAVE_NUMPY = False
 
 classifiers = [
-    'Programming Language :: Python :: 2',
     'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.6',
+    'Programming Language :: Python :: 3.7',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
     'Intended Audience :: Science/Research',
     'License :: OSI Approved :: MIT License',
     'Topic :: Scientific/Engineering',
@@ -24,17 +27,18 @@ classifiers = [
     'Topic :: Scientific/Engineering :: Physics'
 ]
 
+
 dir_path = os.path.dirname(os.path.realpath(__file__))
 with open(os.path.join(dir_path, 'readme.md')) as f:
     long_description = f.read()
 
 kwargs = {
     'name': 'tatter',
-    'version': '0.9.0',
+    'version': '1.0.0',
     'author': 'Arya Farahi',
-    'author_email': 'aryaf@umich.edu',
+    'author_email': 'arya.farahi@austin.utexas.edu',
     'url': 'https://github.com/afarahi/tatter',
-    'description': 'Two-Sample Hypothesis Test.',
+    'description': 'Two-Sample Hypothesis Test. A hypothesis testing tool for multi-dimensional data.',
     'long_description': long_description,
     'long_description_content_type':'text/markdown',
     'license': 'MIT',
@@ -42,15 +46,16 @@ kwargs = {
     'install_requires': ['numpy', 'matplotlib', 'sklearn', 'joblib', 'tqdm', 'pathlib'],
     'packages': find_packages(),
     'test_suite': 'tests',
+    'python_modules': 'tatter',
     'setup_requires': ['pytest-runner'],
     'tests_require': ['pytest'],
-    'classifiers': classifiers
+    'classifiers': classifiers,
+    'package_dir': {'':'.'}
 }
 
 try:
     setup(**kwargs)
 except SystemExit:
-    del kwargs['ext_modules']
     reason = 'numpy missing, ' if not HAVE_NUMPY else ''
     warnings.warn(reason+'compilation failed. Installing pure python package')
     setup(**kwargs)
