@@ -48,7 +48,11 @@ one of the figures try `mnist_digits_distance.py` first.
 [4]. W. H. Press, B. P. Flannery, S. A. Teukolsky, and W. T. Vetterling,
  "Numerical recipes." (1989).
 
+## Installation 
 
+Run the following to install:
+
+    pip install tatter
 
 ## Quickstart
 
